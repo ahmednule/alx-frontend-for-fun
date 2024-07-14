@@ -1,50 +1,43 @@
-#!/usr/bin/env python3
-
+#!/usr/bin/python3
+'''
+A script that codes markdown to HTML
+'''
 import sys
 import os
-import mistletoe
+import re
 
-def main():
-    """
-    Main function that handles the conversion of a Markdown file to HTML.
-    
-    Steps:
-    1. Check if the number of arguments is less than 2.
-    2. Get the input and output file names from the arguments.
-    3. Check if the input file exists.
-    4. Read the content of the input Markdown file.
-    5. Convert the Markdown content to HTML.
-    6. Write the HTML content to the output file.
-    7. Exit with the appropriate status.
-    """
-    # Checking if the number of arguments is less than 2
-    if len(sys.argv) < 3:
-        print("Usage: ./markdown2html.py README.md README.html", file=sys.stderr)
+if __name__ == '__main__':
+
+    # Test that the number of arguments passed is 2
+    if len(sys.argv[1:]) != 2:
+        print('Usage: ./markdown2html.py README.md README.html',
+              file=sys.stderr)
         sys.exit(1)
 
-    # Geting the input and output file names
-    input_filename = sys.argv[1]
-    output_filename = sys.argv[2]
+    # Store the arguments into variables
+    input_file = sys.argv[1]
+    output_file = sys.argv[2]
 
-    # Checking if the Markdown file exists
-    if not os.path.exists(input_filename):
-        print(f"Missing {input_filename}", file=sys.stderr)
+    # Checks that the markdown file exists and is a file
+    if not (os.path.exists(input_file) and os.path.isfile(input_file)):
+        print(f'Missing {input_file}', file=sys.stderr)
         sys.exit(1)
 
-    # Reading the Markdown file
-    with open(input_filename, 'r') as input_file:
-        markdown_text = input_file.read()
+    with open(input_file, encoding='utf-8') as file_1:
+        html_content = []
+        md_content = [line[:-1] for line in file_1.readlines()]
+        for line in md_content:
+            heading = re.split(r'#{1,6} ', line)
+            if len(heading) > 1:
+                # Compute the number of the # present to
+                # determine heading level
+                h_level = len(line[:line.find(heading[1])-1])
+                # Append the html equivalent of the heading
+                html_content.append(
+                    f'<h{h_level}>{heading[1]}</h{h_level}>\n'
+                )
+            else:
+                html_content.append(line)
 
-    # Converting Markdown to HTML
-    html_text = mistletoe.markdown(markdown_text)
-
-    # Writing the HTML to the output file
-    with open(output_filename, 'w') as output_file:
-        output_file.write(html_text)
-
-    # Exiting successfully
-    sys.exit(0)
-
-if __name__ == "__main__":
-    main()
-
+    with open(output_file, 'w', encoding='utf-8') as file_2:
+        file_2.writelines(html_content)
