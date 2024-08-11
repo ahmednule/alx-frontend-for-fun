@@ -1,0 +1,132 @@
+:root {
+    --primary-bg-color: #333;
+    --hover-bg-color: white;
+    --text-color: white;
+    --hover-text-color: #333;
+    --button-size: 50px;
+    --menu-item-size: 50px;
+    --transition-speed: 0.3s;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.menu {
+    position: relative;
+    top: 50px;
+    left: 50px;
+}
+
+.menu-open-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--button-size);
+    height: var(--button-size);
+    background-color: var(--primary-bg-color);
+    border-radius: 50%;
+    position: relative;
+    z-index: 1;
+    cursor: pointer;
+    transition: background-color var(--transition-speed) ease;
+}
+
+.menu-open-button:hover {
+    background-color: var(--hover-bg-color);
+}
+
+.menu-open-button .menu-line {
+    width: 30px;
+    height: 4px;
+    background-color: var(--text-color);
+    margin: 3px 0;
+    transition: transform var(--transition-speed) ease, opacity var(--transition-speed) ease;
+}
+
+.menu-open:checked + .menu-open-button .menu-line-1 {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.menu-open:checked + .menu-open-button .menu-line-2 {
+    opacity: 0;
+}
+
+.menu-open:checked + .menu-open-button .menu-line-3 {
+    transform: rotate(-45deg) translate(5px, -5px);
+}
+
+.menu-item {
+    display: block;
+    width: var(--menu-item-size);
+    height: var(--menu-item-size);
+    background-color: var(--primary-bg-color);
+    color: var(--text-color);
+    border-radius: 50%;
+    text-align: center;
+    line-height: var(--menu-item-size);
+    position: absolute;
+    transform: scale(0);
+    transition: transform var(--transition-speed) ease, background-color var(--transition-speed) ease;
+    z-index: 0;
+    cursor: pointer;
+}
+
+.menu-item:hover {
+    background-color: var(--hover-bg-color);
+    color: var(--hover-text-color);
+    transform: scale(1.1); /* Slightly enlarge on hover */
+}
+
+.menu-item i {
+    font-size: 20px;
+}
+
+.menu-open:checked ~ .menu-item {
+    transform: scale(1);
+}
+
+.menu-item:nth-child(3) {
+    top: 0;
+    left: 60px;
+}
+
+.menu-item:nth-child(4) {
+    top: 60px;
+    left: 60px;
+}
+
+.menu-item:nth-child(5) {
+    top: 60px;
+    left: 0;
+}
+
+.menu-item:nth-child(6) {
+    top: 60px;
+    left: 120px;
+}
+
+.menu-item:nth-child(7) {
+    top: 120px;
+    left: 60px;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .menu {
+        left: 20px;
+        top: 20px;
+    }
+
+    .menu-item {
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+    }
+
+    .menu-open-button {
+        width: 40px;
+        height: 40px;
+    }
+}
