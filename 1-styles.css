@@ -1,0 +1,8 @@
+a{
+    color: brown;
+    text-decoration: none;
+}
+a:hover{
+    text-decoration: underline;
+    transition: width 0.5s ease
+}
