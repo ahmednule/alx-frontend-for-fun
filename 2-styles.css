@@ -67,7 +67,7 @@
     left: 4px;
 }
 
-/* When the input is checked, change the background color and move the switch */
+
 .toggle-cb:checked + .toggle-label .toggle-inner {
     background-color: #66bb6a;
 }
@@ -76,7 +76,7 @@
     transform: translateX(26px);
 }
 
-/* Show "Yes" and hide "No" when checked */
+
 .toggle-cb:checked + .toggle-label::before {
     opacity: 0;
 }
